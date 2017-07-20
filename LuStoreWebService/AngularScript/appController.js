@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function () {
     angular
         .module('app', [])
         .controller('appController', appController);
@@ -12,10 +12,12 @@
         vm.description = '';
         vm.model = '';
         vm.brand = '';
+        vm.serverUrl = 'http://' + $location.$$host + ':' + $location.$$port + '/';
 
-        vm.getToken = function() {
+        vm.getToken = function () {
+
             $http({
-                url: $location.$$absUrl + 'token',
+                url: vm.serverUrl + 'token',
                 method: 'POST',
                 data: $httpParamSerializerJQLike({
                     username: vm.userName,
@@ -25,41 +27,41 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                 if (response.status === 200) {
                     vm.token = 'bearer ' + response.data.access_token;
                 }
             });
         }
 
-        vm.getProducts = function() {
+        vm.getProducts = function () {
             $http({
-                url: $location.$$absUrl + 'api/products',
+                url: vm.serverUrl + 'api/products',
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': vm.token
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                     if (response.status === 200) {
                         vm.products = response.data;
                     }
                 },
-                function(err) {
+                function (err) {
                     vm.products = [];
                     vm.data = err.statusText;
                 });
         }
 
-        vm.getProductById = function() {
+        vm.getProductById = function () {
             $http({
-                url: $location.$$absUrl + 'api/products/' + vm.productId,
+                url: vm.serverUrl + 'api/products/' + vm.productId,
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': vm.token
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                     if (response.status === 200) {
                         vm.products = [];
                         vm.data = '';
@@ -67,17 +69,17 @@
 
                     }
                 },
-                function(err) {
+                function (err) {
                     vm.data = err.statusText;
                     vm.products = [];
                 });
         }
         vm.getProductByFilter = function () {
-            
-            var queryString = 'description=' + vm.description+ '&model=' + vm.model+ '&brand=' + vm.brand;
+
+            var queryString = 'description=' + vm.description + '&model=' + vm.model + '&brand=' + vm.brand;
             console.log(queryString);
             $http({
-                url: $location.$$absUrl + 'api/products?'+queryString,
+                url: vm.serverUrl + 'api/products?' + queryString,
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -94,32 +96,32 @@
                     vm.products = [];
                 });
         }
-        vm.addNewProduct = function() {
+        vm.addNewProduct = function () {
             $http({
-                url: $location.$$absUrl + 'api/products/',
+                url: vm.serverUrl + 'api/products/',
                 method: 'POST',
                 data: vm.product,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': vm.token
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                     if (response.status === 201) {
                         vm.product = {};
                         vm.getProducts();
                     }
                 },
-                function(err) {
+                function (err) {
                     vm.data = err.statusText;
                 });
         }
 
-        vm.editProduct=function(product) {
+        vm.editProduct = function (product) {
             vm.product = angular.copy(product);
         }
-        vm.updateProduct=function() {
+        vm.updateProduct = function () {
             $http({
-                url: $location.$$absUrl + 'api/products/' + vm.product.id,
+                url: vm.serverUrl + 'api/products/' + vm.product.id,
                 method: 'PUT',
                 data: vm.product,
                 headers: {
@@ -137,18 +139,18 @@
                 });
         }
 
-        vm.deleteProduct = function(id) {
+        vm.deleteProduct = function (id) {
             $http({
-                url: $location.$$absUrl + 'api/products/' + id,
+                url: vm.serverUrl + 'api/products/' + id,
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': vm.token
                 }
-            }).then(function(response) {
+            }).then(function (response) {
                     vm.getProducts();
                 },
-                function(err) {
+                function (err) {
                     vm.data = err.statusText;
                 });
         }

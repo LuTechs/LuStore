@@ -7,6 +7,7 @@ Open solution file  **LuStoreWebService.sln**  with Visual Studio 2017.
 
 ```Test=>Run=>All Test ```
 
+```Debug=>Start Debugging ```
 
 user: **admin**
 

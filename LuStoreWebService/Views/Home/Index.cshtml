@@ -45,6 +45,12 @@
                 </div>
                 <button class="btn btn-info" ng-click="Ac.getProductByFilter()">Filter Product</button>
             </div>
+          
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Product</h2>
+        <div class="row" style="margin-left:10px">
             <div class="custom-row">
                 <h4>Add Product</h4>
                 <form class="form-horizontal">
@@ -80,31 +86,33 @@
                     </div>
                 </form>
             </div>
+
+            <div>
+                <h4>Product List</h4>
+                {{Ac.data}}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Description</th>
+                        <th>Model</th>
+                        <th>Brand</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="product in Ac.products">
+                        <td>{{product.id}}</td>
+                        <td>{{product.description}}</td>
+                        <td>{{product.model}}</td>
+                        <td>{{product.brand}}</td>
+                        <td><a ng-click="Ac.editProduct(product)">Edit</a> | <a ng-click="Ac.deleteProduct(product.id)">Delete</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <h2>Product List</h2>
-        {{Ac.data}}
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Description</th>
-                <th>Model</th>
-                <th>Brand</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="product in Ac.products">
-                <td>{{product.id}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.model}}</td>
-                <td>{{product.brand}}</td>
-                <td><a ng-click="Ac.editProduct(product)">Edit</a> | <a ng-click="Ac.deleteProduct(product.id)">Delete</a></td>
-            </tr>
-            </tbody>
-        </table>
+
     </div>
 </div>
 @section scripts{
