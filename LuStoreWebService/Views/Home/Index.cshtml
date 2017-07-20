@@ -1,24 +1,112 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+﻿<div class="row" ng-app="app" ng-controller="appController as Ac" ng-cloak>
+    <div class="col-md-3">
+        <h2>Login</h2>
+        <form>
+            <div class="form-group">
+                <label for="userNameInput">User Name</label>
+                <input type="text" class="form-control" id="userNameInput" placeholder="user name" ng-model="Ac.userName">
+            </div>
+            <div class="form-group">
+                <label for="passwordInput">Password</label>
+                <input type="password" class="form-control" id="passwordInput" placeholder="Password" ng-model="Ac.password">
+            </div>
+
+            <button class="btn btn-info" ng-click="Ac.getToken()">Get Token</button>
+        </form>
+    </div>
+    <div class="col-md-5">
+        <h2>Actions</h2>
+        <div class="row">
+            <div class="custom-row">
+                <h4>Token</h4>
+                <div class="form-group">
+                    <input type="text" id="tokenInput" class="form-control" ng-model="Ac.token">
+                </div>
+            </div>
+            <div class="custom-row">
+                <h4>Get All Products</h4>
+                <div>
+                    <button class="btn btn-info" ng-click="Ac.getProducts()">Get Products</button>
+                </div>
+            </div>
+            <div class="custom-row">
+                <h4 >Find Product Id</h4>
+                <div class="form-group">
+                    <input type="text" id="productIdInput" class="form-control" ng-model="Ac.productId">
+                </div>
+                <button class="btn btn-info" ng-click="Ac.getProductById()">Get Product By Id</button>
+            </div>
+            <div class="custom-row">
+                <h4 >Find Product By Description,Mode,Brand</h4>
+                <div class="form-group">
+                    <input type="text" placeholder="description" class="form-control" ng-model="Ac.description">
+                    <input type="text" placeholder="model" class="form-control" ng-model="Ac.model"/>
+                    <input type="text" placeholder="brand" class="form-control" ng-model="Ac.brand"/>
+                </div>
+                <button class="btn btn-info" ng-click="Ac.getProductByFilter()">Filter Product</button>
+            </div>
+            <div class="custom-row">
+                <h4>Add Product</h4>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputId" class="col-sm-2 control-label">Id</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputId" placeholder="Id" ng-model="Ac.product.id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputDescription" class="col-sm-2 control-label">Description</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputDescription" placeholder="Description" ng-model="Ac.product.description">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputModel" class="col-sm-2 control-label">Model</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputModel" placeholder="Model" ng-model="Ac.product.model">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBrand" class="col-sm-2 control-label">Brand</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputBrand" placeholder="Brand" ng-model="Ac.product.brand">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button class="btn btn-default btn-info" ng-click="Ac.addNewProduct()">Add New Product</button>
+                            <button class="btn btn-default btn-info" ng-click="Ac.updateProduct()">Update Product</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Product List</h2>
+        {{Ac.data}}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Model</th>
+                <th>Brand</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="product in Ac.products">
+                <td>{{product.id}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.model}}</td>
+                <td>{{product.brand}}</td>
+                <td><a ng-click="Ac.editProduct(product)">Edit</a> | <a ng-click="Ac.deleteProduct(product.id)">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>
+@section scripts{
+    @Scripts.Render("~/bundles/angular")
+}

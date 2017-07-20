@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace LuStoreWebService
 {
@@ -13,11 +12,17 @@ namespace LuStoreWebService
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+            json.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            json.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                "DefaultApi",
+                "api/{controller}/{id}",
+                new {id = RouteParameter.Optional}
             );
         }
     }
